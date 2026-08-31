@@ -34,8 +34,9 @@ function Sidebar({
       <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
         <div className="brand">
           <span className="brand-mark">
-            <Zap size={17} fill="currentColor" />
+            <img src="/logo.png" alt="Logo" className="logo" />
           </span>
+
           <span>
             KORM <b>FOREX</b>
           </span>

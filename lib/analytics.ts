@@ -33,10 +33,9 @@ export function calculateAnalytics(trades: Trade[]) {
     : undefined
 
   // current streak (consecutive wins ending at the most recent closed trade)
-  let streak = 0
-  for (let i = sorted.length - 1; i >= 0 && sorted[i].outcome === 'Win'; i--) {
-    streak++
-  }
+ // current streak (number of recent wins)
+const streak = sorted.filter(t => t.outcome === 'Win').length
+
 
   // best win streak across the whole period
   let bestStreak = 0

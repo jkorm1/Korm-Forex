@@ -9,6 +9,7 @@ import {
   TrendingUp,
   Trophy,
   Zap,
+  LogOut,
 } from "lucide-react";
 import {
   Area,

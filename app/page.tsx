@@ -9,6 +9,7 @@ import {
   Plus,
   Settings2,
   Zap,
+  LogOut,
 } from "lucide-react";
 import type { Trade } from "@/lib/types";
 import { DashboardPage } from "@/components/dashboard-page";
@@ -93,10 +94,17 @@ export default function Page() {
   const [trades, setTrades] = useState<Trade[]>([]);
   useEffect(() => {
     fetch("/api/trades")
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((r) => {
+        if (r.status === 401) {
+          window.location.href = "/login";
+          return Promise.reject();
+        }
+        return r.json();
+      })
       .then((data) => setTrades(data.trades))
       .catch(() => undefined);
   }, []);
+
   async function create(trade: Trade) {
     const response = await fetch("/api/trades", {
       method: "POST",
@@ -147,6 +155,16 @@ export default function Page() {
             <div className="eyebrow">Workspace / {active}</div>
             <h1>{active === "Dashboard" ? "Good morning, Korm." : active}</h1>
           </div>
+          <button
+            className="filter-button"
+            style={{ marginLeft: "auto" }}
+            onClick={async () => {
+              await fetch("/api/auth/logout", { method: "POST" });
+              window.location.href = "/login";
+            }}
+          >
+            <LogOut size={15} /> Logout
+          </button>
         </header>
         {active === "Dashboard" ? (
           <DashboardPage trades={trades} />

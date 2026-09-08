@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { appendTrade, getTrades } from '@/lib/googleSheets'
+import { isAuthenticated } from '@/lib/auth'
 
 const schema = z.object({
   id: z.string(),
@@ -17,6 +18,10 @@ const schema = z.object({
 })
 
 export async function GET() {
+  if (!(await isAuthenticated())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     return NextResponse.json({ trades: await getTrades() })
   } catch (error) {
@@ -32,6 +37,10 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  if (!(await isAuthenticated())) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
   try {
     const trade = schema.parse(await request.json())
     return NextResponse.json({ trade: await appendTrade(trade) }, { status: 201 })

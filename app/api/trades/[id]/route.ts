@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { deleteTrade, updateTrade } from '@/lib/googleSheets'
+import { isAuthenticated } from '@/lib/auth'
 
 const schema = z.object({
   id: z.string(),
@@ -20,6 +21,9 @@ export async function PUT(
   request: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
+   if (!isAuthenticated()) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
   try {
     const { id } = await params
     return NextResponse.json({ 
@@ -37,6 +41,9 @@ export async function DELETE(
   _request: Request, 
   { params }: { params: Promise<{ id: string }> }
 ) {
+   if (!isAuthenticated()) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
   try {
     const { id } = await params
     await deleteTrade(id)

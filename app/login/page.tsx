@@ -298,11 +298,28 @@ export default function LoginPage() {
         }
 
         .logo {
-          height: 60px;
+          height: 100px;
           width: auto;
-          max-width: 220px;
+          max-width: 280px;
           display: block;
-          margin: 0 auto 28px;
+          margin: 0 auto 32px;
+          border-radius: 50%;
+          overflow: hidden;
+          background: rgba(18, 22, 27, 0.9);
+          padding: 12px;
+          box-shadow:
+            0 8px 24px rgba(0, 0, 0, 0.5),
+            0 0 0 1px rgba(255, 255, 255, 0.1);
+          transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        }
+
+        .logo:hover {
+          transform: scale(1.05);
+          box-shadow:
+            0 12px 32px rgba(0, 0, 0, 0.6),
+            0 0 0 1px rgba(255, 255, 255, 0.15);
         }
 
         .wordmark {
@@ -550,7 +567,12 @@ export default function LoginPage() {
             top: 20px;
             left: 28px;
             height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: rgba(18, 22, 27, 0.8);
+            padding: 3px;
           }
+
           .form-pane {
             padding: 40px 24px 56px;
           }
